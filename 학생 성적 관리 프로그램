@@ -1,0 +1,66 @@
+students = {}
+
+def add_student():
+    name = input("학생 이름: ")
+
+    kor = int(input("국어 점수: "))
+    eng = int(input("영어 점수: "))
+    math = int(input("수학 점수: "))
+
+    avg = (kor + eng + math) / 3
+
+    students[name] = {
+        "국어": kor,
+        "영어": eng,
+        "수학": math,
+        "평균": avg
+    }
+
+    print(f"{name} 학생이 등록되었습니다.\n")
+
+
+def show_students():
+    if not students:
+        print("등록된 학생이 없습니다.\n")
+        return
+
+    print("\n===== 학생 목록 =====")
+
+    for name, info in students.items():
+        print(
+            f"{name} | "
+            f"국어:{info['국어']} "
+            f"영어:{info['영어']} "
+            f"수학:{info['수학']} "
+            f"평균:{info['평균']:.2f}"
+        )
+
+    print()
+
+
+while True:
+    print("1. 학생 등록")
+    print("2. 학생 조회")
+    print("3. 종료")
+
+    choice = input("선택: ")
+
+    if choice == "1":
+        add_student()
+
+    elif choice == "2":
+        show_students()
+
+    elif choice == "3":
+        print("프로그램 종료")
+        break
+
+    else:
+        print("잘못 입력했습니다.\n")
+
+
+공부 포인트
+함수
+딕셔너리
+반복문
+사용자 입력 처리
