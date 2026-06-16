@@ -1,0 +1,32 @@
+import string
+
+def check_password(password):
+    score = 0
+
+    if len(password) >= 8:
+        score += 1
+
+    if any(char.isupper() for char in password):
+        score += 1
+
+    if any(char.islower() for char in password):
+        score += 1
+
+    if any(char.isdigit() for char in password):
+        score += 1
+
+    if any(char in string.punctuation for char in password):
+        score += 1
+
+    if score <= 2:
+        return "약함"
+    elif score <= 4:
+        return "보통"
+    else:
+        return "강함"
+
+
+pw = input("비밀번호 입력: ")
+result = check_password(pw)
+
+print("비밀번호 강도:", result)
