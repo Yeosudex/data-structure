@@ -1,0 +1,54 @@
+from collections import deque
+
+graph = {
+    "서울": ["인천", "수원"],
+    "인천": ["서울", "부천"],
+    "수원": ["서울", "용인"],
+    "부천": ["인천"],
+    "용인": ["수원", "성남"],
+    "성남": ["용인"]
+}
+
+
+def shortest_path(start, goal):
+
+    queue = deque()
+    queue.append((start, [start]))
+
+    visited = set()
+
+    while queue:
+
+        current, path = queue.popleft()
+
+        if current == goal:
+            return path
+
+        if current not in visited:
+
+            visited.add(current)
+
+            for next_city in graph[current]:
+                new_path = path + [next_city]
+                queue.append((next_city, new_path))
+
+    return None
+
+
+start = input("출발 도시: ")
+goal = input("도착 도시: ")
+
+result = shortest_path(start, goal)
+
+if result:
+    print(" -> ".join(result))
+else:
+    print("경로를 찾을 수 없습니다.")
+
+
+
+공부 포인트
+그래프
+BFS 알고리즘
+최단 경로 탐색
+AI 탐색 알고리즘 기초
