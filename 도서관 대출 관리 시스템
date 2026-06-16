@@ -1,0 +1,74 @@
+books = {
+    "Python": True,
+    "Machine Learning": True,
+    "Deep Learning": True,
+    "Data Science": True
+}
+
+
+def show_books():
+    print("\n===== 도서 목록 =====")
+
+    for title, available in books.items():
+
+        if available:
+            state = "대출 가능"
+        else:
+            state = "대출 중"
+
+        print(f"{title} : {state}")
+
+    print()
+
+
+def borrow_book():
+
+    title = input("대출할 책 이름: ")
+
+    if title not in books:
+        print("존재하지 않는 책입니다.")
+        return
+
+    if books[title]:
+        books[title] = False
+        print("대출 완료")
+    else:
+        print("이미 대출 중입니다.")
+
+
+def return_book():
+
+    title = input("반납할 책 이름: ")
+
+    if title not in books:
+        print("존재하지 않는 책입니다.")
+        return
+
+    books[title] = True
+    print("반납 완료")
+
+
+while True:
+
+    print("\n1. 도서 조회")
+    print("2. 도서 대출")
+    print("3. 도서 반납")
+    print("4. 종료")
+
+    choice = input("선택: ")
+
+    if choice == "1":
+        show_books()
+
+    elif choice == "2":
+        borrow_book()
+
+    elif choice == "3":
+        return_book()
+
+    elif choice == "4":
+        print("종료")
+        break
+
+    else:
+        print("잘못된 입력")
