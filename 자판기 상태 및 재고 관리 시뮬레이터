@@ -1,0 +1,40 @@
+class VendingMachine:
+    def __init__(self):
+        self.items = {
+            "콜라": {"price": 1500, "stock": 5},
+            "사이다": {"price": 1400, "stock": 3},
+            "커피": {"price": 1000, "stock": 0},
+        }
+        self.balance = 0
+
+    def insert_money(self, amount: int):
+        self.balance += amount
+        print(f"투입 금액: {amount:,}원 (현재 잔액: {self.balance:,}원)")
+
+    def select_item(self, name: str):
+        if name not in self.items:
+            print("존재하지 않는 상품입니다.")
+            return
+        item = self.items[name]
+        if item["stock"] <= 0:
+            print(f"'{name}' 상품은 품절입니다.")
+            return
+        if self.balance < item["price"]:
+            print(f"잔액이 부족합니다. (필요 금액: {item['price']:,}원)")
+            return
+
+        item["stock"] -= 1
+        self.balance -= item["price"]
+        print(f"'{name}' 배출 완료! 남은 잔액: {self.balance:,}원")
+
+    def return_change(self):
+        change = self.balance
+        self.balance = 0
+        print(f"잔돈 {change:,}원이 반환되었습니다.")
+
+if __name__ == "__main__":
+    vm = VendingMachine()
+    vm.insert_money(2000)
+    vm.select_item("커피")
+    vm.select_item("콜라")
+    vm.return_change()
