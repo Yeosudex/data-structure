@@ -1,0 +1,38 @@
+from datetime import datetime, timedelta
+import math
+
+class ParkingLot:
+    def __init__(self, total_spots: int, base_fee: int = 2000, unit_fee: int = 500):
+        self.total_spots = total_spots
+        self.base_fee = base_fee  # 기본 30분 요금
+        self.unit_fee = unit_fee  # 추가 10분당 요금
+        self.parked_cars = {}
+
+    def enter(self, car_number: str, enter_time: datetime):
+        if len(self.parked_cars) >= self.total_spots:
+            print("만차입니다.")
+            return
+        self.parked_cars[car_number] = enter_time
+        print(f"[입차] {car_number} ({enter_time.strftime('%H:%M')})")
+
+    def exit(self, car_number: str, exit_time: datetime) -> int:
+        if car_number not in self.parked_cars:
+            print("입차 기록이 없는 차량입니다.")
+            return 0
+        enter_time = self.parked_cars.pop(car_number)
+        parked_minutes = (exit_time - enter_time).total_seconds() / 60
+
+        if parked_minutes <= 30:
+            fee = self.base_fee
+        else:
+            extra_units = math.ceil((parked_minutes - 30) / 10)
+            fee = self.base_fee + (extra_units * self.unit_fee)
+
+        print(f"[출차] {car_number} | 주차 시간: {int(parked_minutes)}분 | 요금: {fee:,}원")
+        return fee
+
+if __name__ == "__main__":
+    lot = ParkingLot(total_spots=10)
+    now = datetime.now()
+    lot.enter("12가 3456", now)
+    lot.exit("12가 3456", now + timedelta(minutes=75))
